@@ -47,6 +47,16 @@ main(int argc, char **argv)
 	//only 4 bytes
 	printf("struct Foo is %d bytes\n", sizeof(struct Foo));
 
+	struct Foo_normal foo[10];
+	int i;
+	//better to use &arr[0] than just arr
+	struct Foo_normal *foo_ptr = &foo[0];
+	for (i = 0; i < 10; i++)
+		foo[i].a = i;
+	//pointer arithmetic, post-increment
+	for (i = 0; i < 10; i++)
+		printf("foo[%d].a = %d\n", i, (foo_ptr++)->a);
+
 	//declare a union
 	union Bar bar;
 	//fill one member
