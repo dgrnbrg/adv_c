@@ -21,6 +21,16 @@ struct Foo_normal {
 union Bar {
 	int a;
 	short b[2];
+	struct {
+		int nib1 : 4;
+		int nib2 : 4;
+		int nib3 : 4;
+		int nib4 : 4;
+		int nib5 : 4;
+		int nib6 : 4;
+		int nib7 : 4;
+		int nib8 : 4;
+	};
 };
 
 //enum
@@ -60,9 +70,11 @@ main(int argc, char **argv)
 	//declare a union
 	union Bar bar;
 	//fill one member
-	bar.a = 0xAAAACCCC;
+	bar.a = 0xcafebabe;
 	//look at it split (endianness!)
 	printf("bar.a = %X, bar.b[0] = %X, bar.b[1] = %X\n", bar.a, bar.b[0] & 0xffff, bar.b[1] & 0xffff);
+	//note the anon struct access
+	printf("nib3 = %X, nib7 = %X\n", bar.nib3 & 0xf, bar.nib6 & 0xf);
 
 	//can print values
 	print_enum(first);
