@@ -36,7 +36,7 @@ main(int argc, char **argv)
 	}
 	print_sw(OP_ADD, 4, 5);
 	print_sw(OP_DIV, 8, 2);
-	print_sw(7, 0, 0);
+	switch_dispatch(7, 0, 0);
 	switch_dispatch(10, 0, 0);
 	switch_dispatch(15, 0, 0);
 	switch_dispatch(20, 0, 0);
