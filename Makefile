@@ -1,4 +1,4 @@
-all: 1-typedefs 2-special_types
+all: 1-typedefs 2-special_types 3-functions
 
 %.o: %.c
 	gcc $@.c
