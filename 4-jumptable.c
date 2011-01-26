@@ -29,37 +29,6 @@ int div(int x, int y);
 int goto_dispatch(int op, int x, int y);
 
 int
-main(int argc, char **argv)
-{
-	void print_sw(int op, int r, int s) {
-		printf("SWCH: op %d (%d, %d) = %d\n", op, r, s, switch_dispatch(op, r, s));
-	}
-	print_sw(OP_ADD, 4, 5);
-	print_sw(OP_DIV, 8, 2);
-	switch_dispatch(7, 0, 0);
-	switch_dispatch(10, 0, 0);
-	switch_dispatch(15, 0, 0);
-	switch_dispatch(20, 0, 0);
-
-	//nested convenience function prints the op
-	void print_func(int op, int r, int s) {
-		printf("FUNC: op %d (%d, %d) = %d\n", op, r, s, func_dispatch(op, r, s));
-	};
-	//test a few dispatches
-	print_func(OP_ADD, 4, 5);
-	print_func(OP_DIV, 8, 2);
-
-	//what if we don't want to make a new stack frame?
-	void print_goto(int op, int r, int s) {
-		printf("GOTO: op %d (%d, %d) = %d\n", op, r, s, goto_dispatch(op, r, s));
-	}
-	print_goto(OP_ADD, 4, 5);
-	print_goto(OP_DIV, 8, 2);
-
-	return 0;
-}
-
-int
 switch_dispatch(int op, int x, int y)
 {
 	switch (op) {
@@ -81,13 +50,32 @@ switch_dispatch(int op, int x, int y)
 	return -1;
 }
 
+void
+switch_helper(void)
+{
+	void print_sw(int op, int r, int s) {
+		printf("SWCH: op %d (%d, %d) = %d\n", op, r, s, switch_dispatch(op, r, s));
+	}
+	print_sw(OP_ADD, 4, 5);
+	print_sw(OP_DIV, 8, 2);
+	switch_dispatch(7, 0, 0);
+	switch_dispatch(10, 0, 0);
+	switch_dispatch(15, 0, 0);
+	switch_dispatch(20, 0, 0);
+}
+
+int add(int x, int y) { return x + y; }
+int sub(int x, int y) { return x - y; }
+int mul(int x, int y) { return x * y; }
+int div(int x, int y) { return x / y; }
+
 int
 func_dispatch(int op, int x, int y)
 {
 	//let's make a jumptable with function pointers
-	int (*jumptable[OP_MAX])(int a, int b) = {
+	//compare with and without static
+	static int (*jumptable[OP_MAX])(int a, int b) = {
 		//named index notation lets us specify things out-of-order
-		[OP_ADD] add,
 		[OP_MUL] mul,
 		[OP_SUB] sub,
 		[OP_DIV] div
@@ -97,16 +85,23 @@ func_dispatch(int op, int x, int y)
 	//return (*jumptable[op])(x, y);
 }
 
-int add(int x, int y) { return x + y; }
-int sub(int x, int y) { return x - y; }
-int mul(int x, int y) { return x * y; }
-int div(int x, int y) { return x / y; }
+void
+func_helper(void)
+{
+	//nested convenience function prints the op
+	void print_func(int op, int r, int s) {
+		printf("FUNC: op %d (%d, %d) = %d\n", op, r, s, func_dispatch(op, r, s));
+	};
+	//test a few dispatches
+	print_func(OP_ADD, 4, 5);
+	print_func(OP_DIV, 8, 2);
+}
 
 int
 goto_dispatch(int op, int x, int y)
 {
 	//now, lets make a jumptable using gotos
-	void *labeltable[OP_MAX] = {
+	static void *labeltable[OP_MAX] = {
 		//here we see the address-of-label syntax
 		[OP_ADD] &&l_add,
 		[OP_MUL] &&l_mul,
@@ -126,3 +121,25 @@ l_mul:
 l_div:
 	return x/y;
 }
+
+void
+goto_helper(void)
+{
+	//what if we don't want to make a new stack frame?
+	void print_goto(int op, int r, int s) {
+		printf("GOTO: op %d (%d, %d) = %d\n", op, r, s, goto_dispatch(op, r, s));
+	}
+	print_goto(OP_ADD, 4, 5);
+	print_goto(OP_DIV, 8, 2);
+}
+
+int
+main(int argc, char **argv)
+{
+	switch_helper();
+	func_helper();
+	goto_helper();
+
+	return 0;
+}
+

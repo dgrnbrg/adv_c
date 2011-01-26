@@ -3,7 +3,7 @@
 int
 main(int argc, char **argv)
 {
-	//simple nested function
+	//simple nested function (gcc-specific)
 	int square(int x) {
 		return x * x;
 	};
@@ -22,6 +22,13 @@ main(int argc, char **argv)
 	printf("func(6) = %d\n", func(6));
 	//stupidly, func = *func
 	printf("(*func)(5) = %d\n", (*func)(5));
+
+	//cdecl.org deciphers function pointers
+	//e.g. int (*x(int (*)(int )))(int )
+	//x is a function that takes 
+	//(pointer to function(int) returning int)
+	//and returns a pointer to function(int) returning int
+	//(thank you cdecl.org!)
 
 	return 0;
 }

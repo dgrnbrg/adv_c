@@ -17,6 +17,29 @@ struct Foo_normal {
 	int c;
 };
 
+void
+struct_bitfield(void)
+{
+	//12 bytes!
+	printf("struct Foo_normal is %d bytes\n", sizeof(struct Foo_normal));
+	//only 4 bytes
+	printf("struct Foo is %d bytes\n", sizeof(struct Foo));
+}
+
+void
+ptr_arith(void)
+{
+	struct Foo_normal foo[10];
+	int i;
+	//better to use &arr[0] than just arr (clarity)
+	struct Foo_normal *foo_ptr = &foo[0];
+	for (i = 0; i < 10; i++)
+		foo[i].a = i;
+	//pointer arithmetic, post-increment
+	for (i = 0; i < 10; i++)
+		printf("foo[%d].a = %d\n", i, (foo_ptr++)->a);
+}
+
 //union
 union Bar {
 	int a;
@@ -32,6 +55,18 @@ union Bar {
 		int nib8 : 4;
 	};
 };
+void
+union_demo(void)
+{
+	//declare a union
+	union Bar bar;
+	//fill one member
+	bar.a = 0xcafebabe;
+	//look at it split (endianness!)
+	printf("bar.a = %X, bar.b[0] = %X, bar.b[1] = %X\n", bar.a, bar.b[0] & 0xffff, bar.b[1] & 0xffff);
+	//note the anon struct access
+	printf("nib3 = %X, nib7 = %X\n", bar.nib3 & 0xf, bar.nib6 & 0xf);
+}
 
 //enum
 enum Baz {
@@ -42,40 +77,9 @@ enum Baz {
 	sixth
 };
 
-//anonymous enum
-enum {
-	red = 0,
-	green,
-	blue
-};
-
-int
-main(int argc, char **argv)
+void
+enum_demo(void)
 {
-	//12 bytes!
-	printf("struct Foo_normal is %d bytes\n", sizeof(struct Foo_normal));
-	//only 4 bytes
-	printf("struct Foo is %d bytes\n", sizeof(struct Foo));
-
-	struct Foo_normal foo[10];
-	int i;
-	//better to use &arr[0] than just arr
-	struct Foo_normal *foo_ptr = &foo[0];
-	for (i = 0; i < 10; i++)
-		foo[i].a = i;
-	//pointer arithmetic, post-increment
-	for (i = 0; i < 10; i++)
-		printf("foo[%d].a = %d\n", i, (foo_ptr++)->a);
-
-	//declare a union
-	union Bar bar;
-	//fill one member
-	bar.a = 0xcafebabe;
-	//look at it split (endianness!)
-	printf("bar.a = %X, bar.b[0] = %X, bar.b[1] = %X\n", bar.a, bar.b[0] & 0xffff, bar.b[1] & 0xffff);
-	//note the anon struct access
-	printf("nib3 = %X, nib7 = %X\n", bar.nib3 & 0xf, bar.nib6 & 0xf);
-
 	//can print values
 	print_enum(first);
 	print_enum(fifth);
@@ -83,14 +87,9 @@ main(int argc, char **argv)
 	print_enum(sixth);
 	//enum is just a number
 	print_enum(3);
-	//doesn't have type safety (strict aliasing is your only hope)
+	//doesn't have type safety
 	print_enum(4);
 	print_enum(8);
-
-	//anonymous enum works, too
-	printf("red=%d, green=%d, blue=%d", red, green, blue);
-
-	return 0;
 }
 
 void print_enum(enum Baz baz) {
@@ -105,3 +104,31 @@ void print_enum(enum Baz baz) {
 		break;
 	}
 }
+
+//anonymous enum
+enum {
+	red = 0,
+	green,
+	blue
+};
+
+void
+anon_enum(void)
+{
+	//anonymous enum works, too
+	printf("red=%d, green=%d, blue=%d", red, green, blue);
+}
+
+int
+main(int argc, char **argv)
+{
+
+	struct_bitfield();
+	ptr_arith();
+	union_demo();
+	enum_demo();
+	anon_enum();
+
+	return 0;
+}
+

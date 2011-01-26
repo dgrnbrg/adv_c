@@ -10,7 +10,8 @@ struct Foo_s {
 typedef struct Bar_s {
 	int a;
 	int b;
-} Bar_t;
+} Bar_t,
+*Bar_p; //now, with pointers!
 
 //Declaration, followed by typedef
 struct Baz_s {
@@ -18,6 +19,26 @@ struct Baz_s {
 	int b;
 };
 typedef struct Baz_s Baz_t;
+
+void
+part1(void)
+{
+	//Inline population
+	struct Foo_s foo = { 7, 9 };
+	Bar_t bar = { 8, 8 };
+	Bar_p pBar = &bar;
+#if 0
+	//Invalid
+	Baz_t baz = (Baz_t) bar;
+#else
+	//Pointer aliasing (dangerous)
+	Baz_t baz = *(Baz_t *)&bar;
+#endif
+
+	printf("foo: %d %d\n", foo.a, foo.b);
+	printf("bar: %d %d\n", bar.a, bar.b);
+	printf("baz: %d %d\n", baz.a, baz.b);
+}
 
 //How about casts?
 typedef int mile;
@@ -29,24 +50,9 @@ typedef struct Meter_s {
 	int x;
 } Meter_t;
 
-int
-main(int argc, char **argv)
+void
+part2(void)
 {
-	//Inline population
-	struct Foo_s foo = { 7, 9 };
-	Bar_t bar = { 8, 8 };
-#if 0
-	//Invalid
-	Baz_t baz = (Baz_t) bar;
-#else
-	//Pointer aliasing (dangerous)
-	Baz_t baz = *(Baz_t *)&bar;
-#endif
-
-	printf("foo: %d %d\n", foo.a, foo.b);
-	printf("foo: %d %d\n", bar.a, bar.b);
-	printf("foo: %d %d\n", baz.a, baz.b);
-
 	meter a = 19;
 	//It doesn't complain about the type switches!
 	mile b = a;
@@ -55,6 +61,12 @@ main(int argc, char **argv)
 	Meter_t c = { 19 };
 	Miles_t d = c; //invalid!
 #endif
+}
 
+int
+main(int argc, char **argv)
+{
+	part1();
+	part2();
 	return 0;
 }
