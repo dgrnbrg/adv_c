@@ -116,7 +116,7 @@ void
 anon_enum(void)
 {
 	//anonymous enum works, too
-	printf("red=%d, green=%d, blue=%d", red, green, blue);
+	printf("red=%d, green=%d, blue=%d\n", red, green, blue);
 }
 
 int
