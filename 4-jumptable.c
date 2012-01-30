@@ -76,9 +76,9 @@ func_dispatch(int op, int x, int y)
 	//compare with and without static
 	static int (*jumptable[OP_MAX])(int a, int b) = {
 		//named index notation lets us specify things out-of-order
-		[OP_MUL] mul,
-		[OP_SUB] sub,
-		[OP_DIV] div
+		[OP_MUL] = mul,
+		[OP_SUB] = sub,
+		[OP_DIV] = div
 	};
 	return jumptable[op](x, y);
 	//or
@@ -103,10 +103,10 @@ goto_dispatch(int op, int x, int y)
 	//now, lets make a jumptable using gotos
 	static void *labeltable[OP_MAX] = {
 		//here we see the address-of-label syntax
-		[OP_ADD] &&l_add,
-		[OP_MUL] &&l_mul,
-		[OP_SUB] &&l_sub,
-		[OP_DIV] &&l_div
+		[OP_ADD] = &&l_add,
+		[OP_MUL] = &&l_mul,
+		[OP_SUB] = &&l_sub,
+		[OP_DIV] = &&l_div
 	};
 
 	//we must dereference a label's address if we want to goto it

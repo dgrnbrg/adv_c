@@ -24,7 +24,7 @@ void
 part1(void)
 {
 	//Inline population
-	struct Foo_s foo = { 7, 9 };
+	struct Foo_s foo = { .a = 7, .b = 9 };
 	Bar_t bar = { 8, 8 };
 	Bar_p pBar = &bar;
 #if 0

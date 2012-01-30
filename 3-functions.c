@@ -11,6 +11,7 @@ main(int argc, char **argv)
 
 	//we can close over the scope, too
 	int counter = 0;
+	//causes a trampoline to be created (slight perf penalty)
 	int add_to_counter(int x) {
 		return counter += x;
 	};
@@ -28,7 +29,8 @@ main(int argc, char **argv)
 	//x is a function that takes 
 	//(pointer to function(int) returning int)
 	//and returns a pointer to function(int) returning int
-	//(thank you cdecl.org!)
+	//
+	//cdecl can also be downloaded & installed
 
 	return 0;
 }
