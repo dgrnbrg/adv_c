@@ -55,9 +55,9 @@ int pure_func(int x) { return x + a; }
 int
 main(int argc, char **argv)
 {
-	printf("foo is at %08lx, size = %d bytes\n", &foo, sizeof(foo));
-	printf("x is at %08lx\n", &x);
-	printf("y is at %08lx\n", &y);
+	printf("foo is at %08x, size = %d bytes\n", &foo, sizeof(foo));
+	printf("x is at %08x\n", &x);
+	printf("y is at %08x\n", &y);
 
 	printf("sizeof(struct Foo) = %d\n", sizeof(struct Foo));
 	printf("sizeof(struct Bar) = %d\n", sizeof(struct Bar));
