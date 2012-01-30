@@ -20,6 +20,12 @@ struct Baz_s {
 };
 typedef struct Baz_s Baz_t;
 
+//Nested designated initializers
+typedef struct {
+	int a;
+	Baz_t b;
+} Quux_t;
+
 void
 part1(void)
 {
@@ -27,6 +33,14 @@ part1(void)
 	struct Foo_s foo = { .a = 7, .b = 9 };
 	Bar_t bar = { 8, 8 };
 	Bar_p pBar = &bar;
+	Quux_t q = {
+		.a = 22,
+		//Nesting
+		.b = {
+			.a = 1,
+			.b = 2,
+		}
+	};
 #if 0
 	//Invalid
 	Baz_t baz = (Baz_t) bar;
