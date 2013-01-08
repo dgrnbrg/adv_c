@@ -78,7 +78,8 @@ func_dispatch(int op, int x, int y)
 		//named index notation lets us specify things out-of-order
 		[OP_MUL] = mul,
 		[OP_SUB] = sub,
-		[OP_DIV] = div
+		[OP_DIV] = div,
+        [OP_ADD] = add
 	};
 	return jumptable[op](x, y);
 	//or
