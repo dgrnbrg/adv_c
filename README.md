@@ -1,6 +1,6 @@
 # Advanced C Lecture Notes
 
-This repository contains the example code/notes for Advanced C, taught by David Greenberg at MIT over IAP 2010-2012.
+This repository contains the example code/notes for Advanced C, taught by David Greenberg at MIT over IAP 2010-2013.
 
 ## Typedefs
 

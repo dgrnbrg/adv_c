@@ -20,7 +20,7 @@ struct Baz_s {
 };
 typedef struct Baz_s Baz_t;
 
-//Nested designated initializers
+//Typedef anonymous struct
 typedef struct {
 	int a;
 	Baz_t b;
@@ -35,7 +35,7 @@ part1(void)
 	Bar_p pBar = &bar;
 	Quux_t q = {
 		.a = 22,
-		//Nesting
+		//Nesting designated initializer
 		.b = {
 			.a = 1,
 			.b = 2,
