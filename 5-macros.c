@@ -22,9 +22,13 @@ main(int argc, char **argv)
 	//we put the semicolon here, b/c this is where the macro's expanded
 	disp_num(14);
 
-//multiple instruction macro
+//multiple instruction macro (bad)
+#define print_twice_bad(msg) printf("%s\n", msg); printf("%s\n", msg);
+    if (0) print_twice_bad("should never appear");
+
+//multiple instruction macro (correct)
 //backslashes at end of line
-#define print_twice(msg) do {				\
+#define print_twice(msg) do {			\
 				printf("%s\n", msg);	\
 				printf("%s\n", msg);	\
 			} while (0)
