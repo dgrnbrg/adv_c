@@ -100,6 +100,7 @@ void print_enum(enum Baz baz) {
 		break;
 	case fifth:
 		printf("fifth\n");
+		break;
 	default:
 		printf("enum: %d\n", baz);
 		break;
