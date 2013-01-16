@@ -10,6 +10,7 @@ struct Foo {
 	int b : 2;
 	int c : 16;
 };
+//NOTE: bitfield int a:1 has possible values 0 and -1. Watch out for sign extension!
 
 struct Foo_normal {
 	int a;
