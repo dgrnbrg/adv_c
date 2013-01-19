@@ -72,7 +72,7 @@ part2(void)
 	mile b = a;
 
 #if 0
-	Meter_t c = { 19 };
+	Meter_t c = { 19 };  # This code protects against mixing up units ...
 	Miles_t d = c; //invalid!
 #endif
 }

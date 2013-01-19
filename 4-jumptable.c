@@ -40,6 +40,7 @@ switch_dispatch(int op, int x, int y)
 		return x / y;
 	case OP_SUB:
 		return x - y;
+	//NOTE: case ranges, "n ... m", is a gcc-specific extension
 	case 7 ... 10:
 		printf("switch_dispatch invoked with opcode in range 7 to 10\n");
 		break;
@@ -75,11 +76,13 @@ func_dispatch(int op, int x, int y)
 	//let's make a jumptable with function pointers
 	//compare with and without static
 	static int (*jumptable[OP_MAX])(int a, int b) = {
+		// NOTE: This type of initializer guarantees entire array
+		//	 is initialized.
 		//named index notation lets us specify things out-of-order
 		[OP_MUL] = mul,
 		[OP_SUB] = sub,
 		[OP_DIV] = div,
-        [OP_ADD] = add
+		[OP_ADD] = add
 	};
 	return jumptable[op](x, y);
 	//or
