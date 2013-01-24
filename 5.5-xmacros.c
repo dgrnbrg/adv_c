@@ -46,7 +46,10 @@ main(void)
 		LIST
 	};
 	#undef X
-	goto *table2[baz];
+
+	unsigned int opcode = baz;
+interpret:
+	goto *table2[opcode];
 
 	//by defining GOTO_END as this type of macro, we can
 	//put it in the for loop
@@ -68,6 +71,8 @@ main(void)
 	}
 
 the_end:
+// NOTE: If the intent is to interpret multiple opcodes,
+//	 could fetch next opcode and re-iterate at interpret:.
 
 	return 0;
 }

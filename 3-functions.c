@@ -24,7 +24,12 @@ main(int argc, char **argv)
 	//stupidly, func = *func
 	printf("(*func)(5) = %d\n", (*func)(5));
 
-	//cdecl.org deciphers function pointers
+	// NOTE: func contains a pointer to trampoline within
+	//	 the current stack frame.  That pointer is not
+	//	 valid once this function exits and the frame
+	//	 is popped off the stack.
+
+	//http://cdecl.org/ deciphers function pointers
 	//e.g. int (*x(int (*)(int )))(int )
 	//x is a function that takes 
 	//(pointer to function(int) returning int)

@@ -55,8 +55,9 @@ main(int argc, char **argv)
 //scoped variable decls
 //surround args with parens to isolate
 #define max1(x, y) ((x) > (y) ? (x) : (y))
-//({}) is gcc
-//typeof(x) is gcc
+//({}) is gcc a extension called expression block.
+//An expression block evaluates to value of last expression.
+//typeof(x) is another gcc extension.
 #define max2(x, y) ({\
 	typeof(x) _x = (x);	\
 	typeof(y) _y = (y);	\

@@ -11,6 +11,7 @@ struct Foo {
 	int c : 16;
 };
 //NOTE: bitfield int a:1 has possible values 0 and -1. Watch out for sign extension!
+//NOTE: avoid bitfields since endian-ness is indeterminate
 
 struct Foo_normal {
 	int a;
